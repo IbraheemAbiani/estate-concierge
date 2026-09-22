@@ -18,17 +18,19 @@ import { site, howItWorks } from '../data/site.js';
           </div>
 
           <div class="field">
-            <label for="s-name">Full Name</label>
+            <label for="s-name">Full Name <span class="req">*</span></label>
             <input id="s-name" name="name" type="text" required autocomplete="name" />
           </div>
           <div class="field-row">
             <div class="field">
-              <label for="s-email">Email</label>
-              <input id="s-email" name="email" type="email" required autocomplete="email" />
+              <label for="s-email">Email <span class="req">*</span></label>
+              <input id="s-email" name="email" type="email" required autocomplete="email"
+                pattern="[^\\s@]+@[^\\s@]+\\.[^\\s@]+" title="Please enter a valid email address, e.g. name@example.com" />
             </div>
             <div class="field">
-              <label for="s-phone">Phone</label>
-              <input id="s-phone" name="phone" type="tel" required autocomplete="tel" />
+              <label for="s-phone">Phone <span class="req">*</span></label>
+              <input id="s-phone" name="phone" type="tel" required autocomplete="tel"
+                pattern="[0-9+()\\-\\s]{7,15}" title="Please enter a valid phone number" />
             </div>
           </div>
           <div class="field">
@@ -81,6 +83,7 @@ import { site, howItWorks } from '../data/site.js';
     .field-row { display:grid; grid-template-columns:1fr 1fr; gap: 1.2rem; }
     @media (max-width: 480px){ .field-row{ grid-template-columns:1fr; } }
     .form-submit { margin-top: 0.6rem; width:100%; }
+    .req { color: var(--gold-deep); }
 
     .sched-steps { padding-top: 1rem; }
     .steps-title { margin: 1rem 0 2rem; }
@@ -93,4 +96,33 @@ import { site, howItWorks } from '../data/site.js';
     .step-title { margin-bottom: 0.5rem; }
     .step p { color: var(--ink-soft); font-size: 0.95rem; }
   </style>
+
+  <script>
+    const dateInput = document.getElementById('s-date');
+    if (dateInput instanceof HTMLInputElement) {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, '0');
+      const dd = String(now.getDate()).padStart(2, '0');
+      dateInput.min = `${yyyy}-${mm}-${dd}`;
+    }
+
+    // type="tel" inputs don't reliably enforce the pattern attribute across
+    // browsers, so validate phone numbers explicitly instead of relying on it.
+    const phoneInput = document.getElementById('s-phone');
+    if (phoneInput instanceof HTMLInputElement) {
+      const phonePattern = /^[0-9+()\-\s]{7,15}$/;
+      const validatePhone = () => {
+        phoneInput.setCustomValidity(
+          phoneInput.value && !phonePattern.test(phoneInput.value)
+            ? 'Please enter a valid phone number (7-15 digits).'
+            : ''
+        );
+      };
+      phoneInput.addEventListener('input', validatePhone);
+      phoneInput.addEventListener('blur', validatePhone);
+      const form = phoneInput.closest('form');
+      form?.addEventListener('submit', validatePhone);
+    }
+  </script>
 </Base>

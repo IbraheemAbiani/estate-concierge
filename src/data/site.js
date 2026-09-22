@@ -16,11 +16,9 @@ export const site = {
     line2: "Los Angeles, CA 90067",
     region: "Los Angeles, California",
   },
-  // Paste your Formspree form IDs here (see README). Until then the forms
-  // post to a harmless placeholder endpoint.
   formspree: {
-    contact: "https://formspree.io/f/your-contact-id",
-    schedule: "https://formspree.io/f/your-schedule-id",
+    contact: "https://formspree.io/f/xvkganbp",
+    schedule: "https://formspree.io/f/mbgloead",
   },
   socials: [
     { label: "Facebook",  href: "https://www.facebook.com",  icon: "facebook" },

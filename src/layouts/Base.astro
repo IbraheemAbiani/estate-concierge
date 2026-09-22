@@ -72,6 +72,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
       } else {
         els.forEach((el) => el.classList.add('is-visible'));
       }
+
+      // Prevent double-submission: disable the submit button once a form
+      // passes validation and starts submitting, so spam-clicking while the
+      // browser navigates to Formspree doesn't fire duplicate submissions.
+      document.querySelectorAll('form').forEach((form) => {
+        form.addEventListener('submit', () => {
+          const btn = form.querySelector('button[type="submit"]');
+          if (btn instanceof HTMLButtonElement) {
+            btn.disabled = true;
+            btn.textContent = 'Submitting…';
+          }
+        });
+      });
     </script>
   </body>
 </html>
