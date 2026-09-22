@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import StatsBand from '../components/StatsBand.astro';
 import CTASection from '../components/CTASection.astro';
 import ServicesSplit from '../components/ServicesSplit.astro';
-import Icon from '../components/Icon.astro';
 import { site, values, areas } from '../data/site.js';
 ---
 <Base>
@@ -63,15 +62,12 @@ import { site, values, areas } from '../data/site.js';
     </div>
     <div class="container-wide mx-auto areas-grid">
       {areas.map((a, i) => (
-        <a href="/contact/" class="area-tile reveal" data-delay={i}>
+        <div class="area-tile reveal" data-delay={i}>
           <img src={a.image} alt={a.name} loading="lazy" />
           <span class="area-scrim"></span>
           <span class="area-name">{a.name}</span>
-        </a>
+        </div>
       ))}
-    </div>
-    <div class="container center areas-cta">
-      <a href="/contact/" class="link-gold reveal">View All Areas <Icon name="arrowRight" size={16} /></a>
     </div>
   </section>
 
@@ -162,6 +158,5 @@ import { site, values, areas } from '../data/site.js';
       font-size: clamp(1.4rem,1rem+1.5vw,2rem);
       letter-spacing:0.08em; color:#fff; text-transform: uppercase;
     }
-    .areas-cta { margin-top: clamp(2rem,4vw,3rem); }
   </style>
 </Base>

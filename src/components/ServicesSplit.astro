@@ -19,9 +19,9 @@ const {
 <div class="container split-grid">
   {items.map((s, i) => (
     <article class="split-card reveal" data-delay={i + 1}>
-      <a href={s.href} class="split-media">
+      <div class="split-media">
         <img src={s.image} alt={s.title} loading="lazy" />
-      </a>
+      </div>
       <div class="split-body">
         <h3>{s.title}</h3>
         <p class="split-sub">{s.subtitle}</p>

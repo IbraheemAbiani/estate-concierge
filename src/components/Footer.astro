@@ -3,13 +3,14 @@ import { site, nav } from '../data/site.js';
 import Icon from './Icon.astro';
 const year = new Date().getFullYear();
 const exploreLinks = nav.filter((item) => item.label !== 'Home');
+const [taglineStart, taglineEnd] = site.tagline.split(', ');
 ---
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="/images/logo.png" alt={site.name} width="72" height="72" />
-        <p class="footer-tagline">{site.tagline}</p>
+        <p class="footer-tagline">{taglineStart}, <br />{taglineEnd}</p>
       </div>
 
       <nav class="footer-nav" aria-label="Footer">
