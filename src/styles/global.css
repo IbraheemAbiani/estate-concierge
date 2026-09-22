@@ -1,0 +1,258 @@
+/* ============================================================
+   THE ESTATE CONCIERGE GROUP — Design System
+   Palette: charcoal · champagne gold · cream / white
+   Type:   Cormorant Garamond (serif display) · Jost (sans)
+   ============================================================ */
+
+:root {
+  /* --- Brand palette --- */
+  --charcoal:        #22272E;   /* solid header, dark bands, footer */
+  --charcoal-deep:   #191D23;   /* deepest overlays / hero scrim base */
+  --charcoal-soft:   #2C323B;   /* raised dark surfaces */
+
+  --gold:            #BF9F5E;   /* primary champagne gold */
+  --gold-light:      #D8BE83;   /* hover / highlights */
+  --gold-deep:       #A5863F;   /* pressed / borders */
+
+  --cream:           #F5F1EA;   /* primary light section bg */
+  --cream-alt:       #EEE7DA;   /* alternating light band */
+  --white:           #FFFFFF;
+
+  --ink:             #2A2C30;   /* body text on light */
+  --ink-soft:        #5F636B;   /* muted body text on light */
+  --on-dark:         #F3EFE8;   /* body text on dark */
+  --on-dark-soft:    #B9BCC2;   /* muted text on dark */
+
+  --hairline:        rgba(191, 159, 94, 0.45); /* gold hairline */
+  --hairline-soft:   rgba(42, 44, 48, 0.12);
+
+  /* --- Type --- */
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans:  "Jost", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  /* --- Layout --- */
+  --container:      1240px;
+  --container-wide: 1440px;
+  --gutter:         clamp(1.25rem, 5vw, 4rem);
+  --section-y:      clamp(4.5rem, 9vw, 8.5rem);
+  --radius:         2px;
+
+  --header-h: 96px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.65;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.075rem);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img, video, svg { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+ul { list-style: none; padding: 0; }
+
+/* ---------- Typography ---------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: 0.005em;
+  color: var(--charcoal);
+}
+.display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+}
+h1, .h1 { font-size: clamp(2.6rem, 1.6rem + 4.6vw, 5.4rem); }
+h2, .h2 { font-size: clamp(2rem, 1.3rem + 2.9vw, 3.6rem); }
+h3, .h3 { font-size: clamp(1.5rem, 1.2rem + 1.3vw, 2.1rem); }
+h4, .h4 { font-size: clamp(1.2rem, 1.05rem + 0.5vw, 1.4rem); }
+
+p { max-width: 68ch; }
+
+/* Eyebrow / kicker label */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: inline-block;
+}
+.on-dark .eyebrow, .eyebrow.on-dark { color: var(--gold-light); }
+
+/* ---------- Layout helpers ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.container-wide { max-width: var(--container-wide); }
+.section { padding-block: var(--section-y); }
+.section-cream { background: var(--cream); }
+.section-cream-alt { background: var(--cream-alt); }
+.section-white { background: var(--white); }
+.section-dark { background: var(--charcoal); color: var(--on-dark); }
+.section-dark h1, .section-dark h2, .section-dark h3, .section-dark h4 { color: var(--white); }
+.section-dark p { color: var(--on-dark-soft); }
+
+.center { text-align: center; }
+.measure { max-width: 60ch; }
+.mx-auto { margin-inline: auto; }
+
+/* Gold hairline divider */
+.rule {
+  width: 100%;
+  height: 1px;
+  background: var(--hairline);
+  border: 0;
+}
+.rule-short { width: 64px; height: 2px; background: var(--gold); border: 0; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  --btn-pad-y: 1rem;
+  --btn-pad-x: 2.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  border-radius: var(--radius);
+  transition: background 0.4s var(--ease), color 0.4s var(--ease),
+              border-color 0.4s var(--ease), transform 0.4s var(--ease);
+  will-change: transform;
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn-gold { background: var(--gold); color: #fff; }
+.btn-gold:hover { background: var(--gold-light); color: var(--charcoal); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--charcoal);
+  border: 1px solid var(--charcoal);
+}
+.btn-outline:hover { background: var(--charcoal); color: var(--white); }
+
+/* light outline for use over dark imagery */
+.btn-outline-light {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.7);
+}
+.btn-outline-light:hover { background: var(--white); color: var(--charcoal); border-color: var(--white); }
+
+.btn-outline-gold {
+  background: transparent;
+  color: var(--gold-deep);
+  border: 1px solid var(--gold);
+}
+.btn-outline-gold:hover { background: var(--gold); color: #fff; }
+
+/* Text link with gold underline sweep */
+.link-gold {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--hairline);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), gap 0.3s var(--ease);
+}
+.link-gold:hover { color: var(--charcoal); border-color: var(--gold); gap: 0.85em; }
+
+/* ---------- Reveal on scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  will-change: opacity, transform;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+.reveal[data-delay="1"] { transition-delay: 0.08s; }
+.reveal[data-delay="2"] { transition-delay: 0.16s; }
+.reveal[data-delay="3"] { transition-delay: 0.24s; }
+.reveal[data-delay="4"] { transition-delay: 0.32s; }
+.reveal[data-delay="5"] { transition-delay: 0.40s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .btn:hover { transform: none; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* ---------- Generic grids ---------- */
+.grid { display: grid; gap: clamp(1.5rem, 3vw, 2.75rem); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 960px) {
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 680px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* ---------- Forms ---------- */
+.field { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.4rem; }
+.field label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.field input,
+.field textarea,
+.field select {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--hairline-soft);
+  border-radius: var(--radius);
+  padding: 0.95rem 1.1rem;
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(191,159,94,0.15);
+}
+.field textarea { resize: vertical; min-height: 150px; }
+
+/* Honeypot (spam trap) — visually hidden */
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.form-note { font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.5rem; }

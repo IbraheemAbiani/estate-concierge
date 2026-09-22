@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ServicesSplit from '../components/ServicesSplit.astro';
+import CTASection from '../components/CTASection.astro';
+import { servicesPage, coreServices } from '../data/site.js';
+---
+<Base title="Services" description="Explore our two core services — full-service Property Management and white-glove Concierge Maintenance.">
+  <PageHero eyebrow={servicesPage.eyebrow} title={servicesPage.title} />
+
+  <!-- Two headline services -->
+  <section class="section section-cream">
+    <ServicesSplit
+      eyebrow={servicesPage.splitEyebrow}
+      title={servicesPage.splitTitle}
+      lead={servicesPage.splitLead}
+      ctaField="detailsLabel"
+    />
+  </section>
+
+  <!-- Six core service components -->
+  <section class="section section-cream-alt">
+    <div class="container center">
+      <span class="eyebrow reveal">{servicesPage.coreEyebrow}</span>
+      <h2 class="reveal" data-delay="1">{servicesPage.coreTitle}</h2>
+    </div>
+    <div class="container core-grid">
+      {coreServices.map((c, i) => (
+        <div class="core-card reveal" data-delay={i % 3}>
+          <span class="core-num">0{i + 1}</span>
+          <h3 class="core-title">{c.title}</h3>
+          <p class="core-body">{c.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTASection
+    eyebrow={servicesPage.ctaEyebrow}
+    title={servicesPage.ctaTitle}
+    body={servicesPage.ctaBody}
+    cta={servicesPage.ctaLabel}
+  />
+
+  <style>
+    .core-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      margin-top: clamp(2.5rem, 5vw, 4rem);
+    }
+    @media (max-width: 940px) { .core-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px) { .core-grid { grid-template-columns: 1fr; } }
+    .core-card {
+      background: var(--white);
+      border: 1px solid var(--hairline-soft);
+      border-top: 2px solid var(--gold);
+      padding: clamp(1.8rem, 3vw, 2.6rem);
+      transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+    }
+    .core-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(34,39,46,0.12);
+    }
+    .core-num { font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--gold-deep); }
+    .core-title { margin: 0.7rem 0 0.8rem; }
+    .core-body { color: var(--ink-soft); font-size: 0.95rem; }
+  </style>
+</Base>

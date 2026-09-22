@@ -1,0 +1,26 @@
+---
+const { eyebrow = "Begin", title, body, cta = "Schedule Consultation", href = "/schedule/" } = Astro.props;
+---
+<section class="section cta-section section-dark">
+  <div class="container center">
+    <span class="eyebrow reveal">{eyebrow}</span>
+    <h2 class="reveal cta-title" data-delay="1">{title}</h2>
+    {body && <p class="reveal mx-auto cta-body" data-delay="2">{body}</p>}
+    <div class="reveal" data-delay="3">
+      <a href={href} class="btn btn-gold cta-btn">{cta}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section { position: relative; overflow: hidden; }
+  .cta-section::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(90% 120% at 50% -20%, rgba(191,159,94,0.16), transparent 55%);
+    pointer-events: none;
+  }
+  .cta-title { margin-top: 1rem; }
+  .cta-body { margin-top: 1.2rem; max-width: 54ch; color: var(--on-dark-soft); font-size: 1.1rem; }
+  .cta-btn { margin-top: 2.2rem; }
+</style>

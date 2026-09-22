@@ -1,0 +1,240 @@
+---
+import { site, nav } from '../data/site.js';
+import Icon from './Icon.astro';
+const path = Astro.url.pathname;
+const isActive = (href) => href === '/' ? path === '/' : path.startsWith(href);
+---
+<header class="site-header" data-header>
+  <div class="header-inner container-wide">
+    <a href="/" class="brand" aria-label={`${site.name} — home`}>
+      <img src="/images/logo.png" alt={site.name} class="brand-mark" width="52" height="52" />
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary">
+      {nav.map((item) => (
+        <a href={item.href} class:list={["nav-link", { active: isActive(item.href) }]}>{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="header-actions">
+      <button class="hamburger" data-menu-open aria-label="Open menu" aria-expanded="false" aria-controls="nav-panel">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Slide-in side menu -->
+<div class="nav-panel" id="nav-panel" data-overlay aria-hidden="true">
+  <div class="panel-backdrop" data-menu-close></div>
+  <div class="panel-content">
+    <button class="panel-close" data-menu-close aria-label="Close menu">
+      <span></span><span></span>
+    </button>
+
+    <nav class="panel-nav" aria-label="Side menu">
+      {nav.map((item, i) => (
+        <a href={item.href} class:list={["panel-link", { active: isActive(item.href) }]} style={`--i:${i}`} data-menu-close>{item.label}</a>
+      ))}
+      <a href="/schedule/" class="panel-link panel-link--cta" style={`--i:${nav.length}`} data-menu-close>Schedule Consultation</a>
+    </nav>
+
+    <div class="panel-foot">
+      <a href={site.phoneHref} class="panel-contact">{site.phone}</a>
+      <a href={`mailto:${site.email}`} class="panel-contact">{site.email}</a>
+      <div class="panel-socials">
+        {site.socials.map((s) => (
+          <a href={s.href} target="_blank" rel="noopener" aria-label={s.label}><Icon name={s.icon} size={18} /></a>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: transparent;
+    transition: background 0.5s var(--ease), box-shadow 0.5s var(--ease), padding 0.4s var(--ease);
+    padding-block: 1.15rem;
+  }
+  .site-header.scrolled {
+    background: var(--charcoal);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.28);
+    padding-block: 0.6rem;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .brand { display: flex; align-items: center; min-width: 0; margin-left: clamp(0.5rem, 2.5vw, 2.5rem); }
+  .brand-mark { width: 52px; height: 52px; object-fit: contain; transition: width 0.4s var(--ease), height 0.4s var(--ease); }
+  .scrolled .brand-mark { width: 44px; height: 44px; }
+
+  .desktop-nav { display: flex; align-items: center; gap: clamp(1.1rem, 2vw, 2.1rem); }
+  .nav-link {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.86);
+    position: relative;
+    padding-block: 0.4rem;
+    transition: color 0.3s var(--ease);
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute; left: 0; bottom: 0;
+    width: 0; height: 1px; background: var(--gold-light);
+    transition: width 0.35s var(--ease);
+  }
+  .nav-link:hover, .nav-link.active { color: #fff; }
+  .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+  .header-actions { display: flex; align-items: center; gap: 1rem; }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 44px; height: 44px;
+    padding: 10px;
+  }
+  .hamburger span {
+    display: block; height: 1.5px; width: 100%;
+    background: #fff; transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+
+  /* Hide the full text nav on tablet/mobile; hamburger covers it there */
+  @media (max-width: 1024px) {
+    .desktop-nav { display: none; }
+  }
+
+  /* ---------- Slide-in side panel ---------- */
+  .nav-panel {
+    position: fixed; inset: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: flex-end;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .nav-panel.open { visibility: visible; pointer-events: auto; }
+  body.menu-open { overflow: hidden; }
+
+  .panel-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(15,17,20,0.6);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease);
+  }
+  .nav-panel.open .panel-backdrop { opacity: 1; }
+
+  .panel-content {
+    position: relative;
+    width: min(420px, 88vw);
+    height: 100%;
+    background: var(--charcoal);
+    box-shadow: -30px 0 60px rgba(0,0,0,0.35);
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem clamp(1.6rem, 4vw, 2.6rem) 2rem;
+    transform: translateX(100%);
+    transition: transform 0.55s var(--ease);
+  }
+  .nav-panel.open .panel-content { transform: translateX(0); }
+
+  .panel-close {
+    align-self: flex-end;
+    width: 44px; height: 44px;
+    position: relative;
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+  }
+  .panel-close span {
+    position: absolute; left: 8px; right: 8px; top: 50%;
+    height: 1.5px; background: #fff;
+  }
+  .panel-close span:nth-child(1) { transform: rotate(45deg); }
+  .panel-close span:nth-child(2) { transform: rotate(-45deg); }
+
+  .panel-nav {
+    display: flex;
+    flex-direction: column;
+  }
+  .panel-link {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.6rem);
+    color: rgba(255,255,255,0.92);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    transition: color 0.3s var(--ease), padding-left 0.3s var(--ease);
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  .nav-panel.open .panel-link {
+    opacity: 1; transform: none;
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), color 0.3s var(--ease), padding-left 0.3s var(--ease);
+    transition-delay: calc(0.1s + var(--i) * 0.05s);
+  }
+  .panel-link:hover, .panel-link.active { color: var(--gold-light); padding-left: 0.5rem; }
+  .panel-link--cta { color: var(--gold-light); }
+
+  .panel-foot {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .panel-contact {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    color: var(--on-dark-soft);
+    transition: color 0.3s var(--ease);
+  }
+  .panel-contact:hover { color: var(--gold-light); }
+  .panel-socials { display: flex; gap: 1.1rem; margin-top: 0.4rem; }
+  .panel-socials a { color: rgba(255,255,255,0.7); transition: color 0.3s var(--ease); }
+  .panel-socials a:hover { color: var(--gold-light); }
+</style>
+
+<script>
+  const header = document.querySelector('[data-header]');
+  const overlay = document.querySelector('[data-overlay]');
+  const openBtn = document.querySelector('[data-menu-open]');
+  const closeEls = document.querySelectorAll('[data-menu-close]');
+
+  // Transparent -> solid charcoal on scroll
+  const onScroll = () => {
+    if (window.scrollY > 40) header?.classList.add('scrolled');
+    else header?.classList.remove('scrolled');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Side panel menu
+  const openMenu = () => {
+    overlay?.classList.add('open');
+    overlay?.setAttribute('aria-hidden', 'false');
+    openBtn?.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+  };
+  const closeMenu = () => {
+    overlay?.classList.remove('open');
+    overlay?.setAttribute('aria-hidden', 'true');
+    openBtn?.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  };
+  openBtn?.addEventListener('click', openMenu);
+  closeEls.forEach((el) => el.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+</script>

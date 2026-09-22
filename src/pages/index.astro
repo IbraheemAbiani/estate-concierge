@@ -1,0 +1,167 @@
+---
+import Base from '../layouts/Base.astro';
+import StatsBand from '../components/StatsBand.astro';
+import CTASection from '../components/CTASection.astro';
+import ServicesSplit from '../components/ServicesSplit.astro';
+import Icon from '../components/Icon.astro';
+import { site, values, areas } from '../data/site.js';
+---
+<Base>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="/images/hero-poster.jpg">
+      <source src="/videos/hero.mp4" type="video/mp4" />
+    </video>
+    <span class="hero-scrim"></span>
+    <div class="hero-content container center">
+      <span class="eyebrow hero-eyebrow">{site.tagline}</span>
+      <h1 class="hero-title">The Estate<br />Concierge Group</h1>
+      <p class="hero-sub">From full-service property management to white-glove concierge maintenance — we've got you covered.</p>
+      <div class="hero-actions">
+        <a href="/schedule/" class="btn btn-gold">Schedule a Consultation</a>
+        <a href="/services/" class="btn btn-outline-light">Our Services</a>
+      </div>
+    </div>
+    <a href="#services" class="hero-scroll" aria-label="Scroll to content"><span></span></a>
+  </section>
+
+  <StatsBand />
+
+  <!-- ============ SERVICES SPLIT ============ -->
+  <section id="services" class="section section-cream-alt">
+    <ServicesSplit />
+  </section>
+
+  <!-- Video showcase carousel + testimonials hidden for now — pending real footage/reviews.
+       See VideoCarousel.astro and site.js `showcase` to bring the carousel back. -->
+
+  <!-- ============ MISSION + VALUES ============ -->
+  <section class="section section-cream mission">
+    <div class="container mission-grid">
+      <div class="mission-intro reveal">
+        <span class="eyebrow">Our Mission</span>
+        <h2 class="mission-title">Bespoke Care for Extraordinary Estates</h2>
+        <p>The Estate Concierge Group is committed to delivering flawless, white-glove property management and concierge care. We preserve the integrity and value of your finest assets — providing absolute peace of mind through meticulous attention to detail and unwavering professional discretion.</p>
+        <a href="/about/" class="btn btn-outline mission-btn">Learn More</a>
+      </div>
+      <div class="values-grid">
+        {values.map((v, i) => (
+          <div class="value-card reveal" data-delay={i}>
+            <span class="value-num">0{i + 1}</span>
+            <h4>{v.title}</h4>
+            <p>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AREAS WE SERVE ============ -->
+  <section class="section section-cream areas">
+    <div class="container center">
+      <h2 class="reveal areas-title">Areas We Serve</h2>
+    </div>
+    <div class="container-wide mx-auto areas-grid">
+      {areas.map((a, i) => (
+        <a href="/contact/" class="area-tile reveal" data-delay={i}>
+          <img src={a.image} alt={a.name} loading="lazy" />
+          <span class="area-scrim"></span>
+          <span class="area-name">{a.name}</span>
+        </a>
+      ))}
+    </div>
+    <div class="container center areas-cta">
+      <a href="/contact/" class="link-gold reveal">View All Areas <Icon name="arrowRight" size={16} /></a>
+    </div>
+  </section>
+
+  <CTASection
+    eyebrow="Begin the Experience"
+    title="Ready for Effortless Estate Care?"
+    body="Schedule a complimentary consultation and discover the peace of mind that comes with true white-glove service."
+  />
+
+  <style>
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: var(--charcoal-deep);
+    }
+    .hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-scrim {
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(to bottom, rgba(15,17,20,0.72), rgba(15,17,20,0.55) 40%, rgba(15,17,20,0.85)),
+        radial-gradient(90% 80% at 50% 40%, transparent, rgba(15,17,20,0.6));
+    }
+    .hero-content { position: relative; z-index: 2; padding-top: var(--header-h); }
+    .hero-eyebrow { color: #fff; margin-bottom: 1.4rem; }
+    .hero-title {
+      color: #fff;
+      font-size: clamp(2.8rem, 1.5rem + 6vw, 6.4rem);
+      line-height: 1;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.35);
+    }
+    .hero-sub {
+      color: rgba(255,255,255,0.9);
+      font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.35rem);
+      max-width: 46ch;
+      margin: 1.6rem auto 0;
+      font-weight: 300;
+    }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2.4rem; }
+    .hero-scroll {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      z-index: 2; width: 26px; height: 44px;
+      border: 1px solid rgba(255,255,255,0.5); border-radius: 20px;
+      display: grid; justify-items: center; padding-top: 8px;
+    }
+    .hero-scroll span {
+      width: 3px; height: 8px; border-radius: 2px; background: var(--gold-light);
+      animation: scrolldot 1.8s var(--ease) infinite;
+    }
+    @keyframes scrolldot { 0%{opacity:0;transform:translateY(0)} 40%{opacity:1} 80%{opacity:0;transform:translateY(12px)} 100%{opacity:0} }
+    @media (prefers-reduced-motion: reduce){ .hero-scroll span{ animation: none; } }
+
+    /* ---------- Mission + values ---------- */
+    .mission-grid { display:grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2rem,5vw,5rem); align-items:center; }
+    @media (max-width: 860px){ .mission-grid{ grid-template-columns: 1fr; } }
+    .mission-title { margin: 1rem 0 1.4rem; }
+    .mission-intro p { color: var(--ink-soft); }
+    .mission-btn { margin-top: 2rem; }
+    .values-grid { display:grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem,3vw,2.5rem); }
+    @media (max-width: 480px){ .values-grid{ grid-template-columns: 1fr; } }
+    .value-card { border-top: 1px solid var(--hairline); padding-top: 1.3rem; }
+    .value-num { font-family: var(--font-sans); font-size:0.8rem; letter-spacing:0.2em; color: var(--gold-deep); }
+    .value-card h4 { margin: 0.6rem 0 0.7rem; }
+    .value-card p { font-size: 0.92rem; color: var(--ink-soft); }
+
+    /* ---------- Areas ---------- */
+    .areas-title { letter-spacing: 0.16em; text-transform: uppercase; font-size: clamp(1.8rem,1.2rem+2.5vw,3.2rem); }
+    .areas-grid { display:grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: clamp(2.5rem,5vw,3.5rem); padding-inline: var(--gutter); }
+    @media (max-width: 760px){ .areas-grid{ grid-template-columns: 1fr; } }
+    .area-tile { position: relative; display:block; aspect-ratio: 3/3.6; overflow:hidden; border-radius: var(--radius); }
+    @media (max-width: 760px){ .area-tile{ aspect-ratio: 16/10; } }
+    .area-tile img { width:100%; height:100%; object-fit: cover; transition: transform 0.9s var(--ease); }
+    .area-tile:hover img { transform: scale(1.06); }
+    .area-scrim { position:absolute; inset:0; background: linear-gradient(to top, rgba(20,23,28,0.7), transparent 55%); }
+    .area-name {
+      position:absolute; left:0; right:0; bottom: clamp(1.4rem,3vw,2.4rem);
+      text-align:center;
+      font-family: var(--font-serif); font-weight:500;
+      font-size: clamp(1.4rem,1rem+1.5vw,2rem);
+      letter-spacing:0.08em; color:#fff; text-transform: uppercase;
+    }
+    .areas-cta { margin-top: clamp(2rem,4vw,3rem); }
+  </style>
+</Base>

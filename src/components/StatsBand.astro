@@ -1,0 +1,55 @@
+---
+import { stats } from '../data/site.js';
+const { items = stats } = Astro.props;
+---
+<section class="section-cream stats-band">
+  <div class="container">
+    <div class="stats-grid">
+      {items.map((s, i) => (
+        <div class="stat reveal" data-delay={i}>
+          <span class="stat-value display">{s.value}</span>
+          <span class="stat-label">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-band { padding-block: clamp(3rem, 6vw, 5rem); }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .stat { text-align: center; position: relative; }
+  .stat:not(:last-child)::after {
+    content: "";
+    position: absolute; right: calc(-1 * clamp(0.75rem, 1.5vw, 1.25rem)); top: 15%;
+    height: 70%; width: 1px; background: var(--hairline);
+  }
+  .stat-value {
+    display: block;
+    font-size: clamp(2.5rem, 2rem + 3vw, 4.2rem);
+    color: var(--charcoal);
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+  .stat-label {
+    display: block;
+    margin-top: 0.8rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 720px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 1.5rem; }
+    .stat:nth-child(2)::after { display: none; }
+  }
+  @media (max-width: 420px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .stat::after { display: none !important; }
+  }
+</style>

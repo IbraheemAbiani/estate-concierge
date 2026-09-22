@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site.js';
+---
+<Base title="Contact" description="Get in touch with The Estate Concierge Group.">
+  <PageHero eyebrow="Contact" title="Connect with Our Concierge" />
+
+  <section class="section section-cream">
+    <div class="container contact-grid">
+      <!-- Info -->
+      <div class="contact-info reveal">
+        <h2 class="contact-h2">Get in Touch</h2>
+        <p class="contact-lead">Whether you're seeking full-service management or white-glove maintenance, our team is ready to craft a plan around your estate. We respond within 24 hours.</p>
+
+        <ul class="contact-list">
+          <li>
+            <span class="ci-icon"><Icon name="pin" size={20} /></span>
+            <span><span class="ci-label">Location</span>{site.address.region}</span>
+          </li>
+          <li>
+            <span class="ci-icon"><Icon name="mail" size={20} /></span>
+            <span><span class="ci-label">Email</span><a href={`mailto:${site.email}`}>{site.email}</a></span>
+          </li>
+          <li>
+            <span class="ci-icon"><Icon name="phone" size={20} /></span>
+            <span><span class="ci-label">Phone</span><a href={site.phoneHref}>{site.phone}</a></span>
+          </li>
+        </ul>
+
+        <div class="office">
+          <span class="ci-label">Our Los Angeles Office</span>
+          <p>{site.address.line1}<br />{site.address.line2}</p>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="contact-form-wrap reveal" data-delay="1">
+        <form class="contact-form" action={site.formspree.contact} method="POST">
+          <input type="hidden" name="_subject" value="New contact enquiry — Estate Concierge Group" />
+          <div class="hp-field" aria-hidden="true">
+            <label>Do not fill this in<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <div class="field">
+            <label for="c-name">Name</label>
+            <input id="c-name" name="name" type="text" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="c-email">Email Address</label>
+            <input id="c-email" name="email" type="email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="c-subject">Subject</label>
+            <input id="c-subject" name="subject" type="text" required />
+          </div>
+          <div class="field">
+            <label for="c-message">Message</label>
+            <textarea id="c-message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold form-submit">Submit</button>
+          <p class="form-note">By submitting, you agree to be contacted regarding your enquiry.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .contact-grid { display:grid; grid-template-columns: 1fr 1.1fr; gap: clamp(2rem,5vw,5rem); align-items:start; }
+    @media (max-width: 860px){ .contact-grid{ grid-template-columns:1fr; } }
+    .contact-h2 { margin-bottom: 1.2rem; }
+    .contact-lead { color: var(--ink-soft); margin-bottom: 2.5rem; }
+    .contact-list { display:flex; flex-direction:column; gap: 1.6rem; margin-bottom: 2.5rem; }
+    .contact-list li { display:flex; gap: 1rem; align-items:flex-start; }
+    .ci-icon { color: var(--gold); flex-shrink:0; margin-top: 0.1rem; }
+    .ci-label { display:block; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color: var(--ink-soft); margin-bottom: 0.3rem; }
+    .contact-list a:hover { color: var(--gold-deep); }
+    .office { border-top: 1px solid var(--hairline); padding-top: 1.5rem; }
+    .office p { color: var(--ink-soft); margin-top: 0.4rem; line-height:1.7; }
+
+    .contact-form-wrap { background: var(--white); padding: clamp(1.8rem,4vw,3rem); border:1px solid var(--hairline-soft); border-top: 2px solid var(--gold); }
+    .form-submit { margin-top: 0.6rem; width: 100%; }
+  </style>
+</Base>

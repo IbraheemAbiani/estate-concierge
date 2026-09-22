@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site, howItWorks } from '../data/site.js';
+---
+<Base title="Schedule a Consultation" description="Book your complimentary property management and concierge consultation.">
+  <PageHero eyebrow="Consultation" title="Schedule a Consultation" intro="Book your complimentary property management and concierge consultation today." />
+
+  <section class="section section-cream">
+    <div class="container sched-grid">
+      <!-- Form -->
+      <div class="sched-form-wrap reveal">
+        <h2 class="sched-h2">Consultation Request</h2>
+        <form class="sched-form" action={site.formspree.schedule} method="POST">
+          <input type="hidden" name="_subject" value="New consultation request — Estate Concierge Group" />
+          <div class="hp-field" aria-hidden="true">
+            <label>Do not fill this in<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <div class="field">
+            <label for="s-name">Full Name</label>
+            <input id="s-name" name="name" type="text" required autocomplete="name" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="s-email">Email</label>
+              <input id="s-email" name="email" type="email" required autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="s-phone">Phone</label>
+              <input id="s-phone" name="phone" type="tel" required autocomplete="tel" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="s-address">Property Address</label>
+            <input id="s-address" name="property_address" type="text" autocomplete="street-address" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="s-date">Preferred Date</label>
+              <input id="s-date" name="preferred_date" type="date" />
+            </div>
+            <div class="field">
+              <label for="s-time">Preferred Time</label>
+              <input id="s-time" name="preferred_time" type="time" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="s-message">Message</label>
+            <textarea id="s-message" name="message" placeholder="Tell us about your property management needs.."></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold form-submit">Request Consultation</button>
+          <p class="form-note">* Required fields. We'll contact you within 24 hours to confirm your consultation.</p>
+        </form>
+      </div>
+
+      <!-- How it works -->
+      <aside class="sched-steps reveal" data-delay="1">
+        <span class="eyebrow">The Gold Standard</span>
+        <h2 class="steps-title">How It Works</h2>
+        <ol class="steps-list">
+          {howItWorks.map((s) => (
+            <li class="step">
+              <span class="step-num display">{s.step}</span>
+              <div>
+                <h3 class="step-title">{s.title}</h3>
+                <p>{s.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <style>
+    .sched-grid { display:grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(2rem,5vw,4.5rem); align-items:start; }
+    @media (max-width: 900px){ .sched-grid{ grid-template-columns:1fr; } }
+    .sched-form-wrap { background: var(--white); padding: clamp(1.8rem,4vw,3rem); border:1px solid var(--hairline-soft); border-top: 2px solid var(--gold); }
+    .sched-h2 { margin-bottom: 1.8rem; }
+    .field-row { display:grid; grid-template-columns:1fr 1fr; gap: 1.2rem; }
+    @media (max-width: 480px){ .field-row{ grid-template-columns:1fr; } }
+    .form-submit { margin-top: 0.6rem; width:100%; }
+
+    .sched-steps { padding-top: 1rem; }
+    .steps-title { margin: 1rem 0 2rem; }
+    .steps-list { display:flex; flex-direction:column; gap: 2rem; }
+    .step { display:flex; gap: 1.3rem; align-items:flex-start; }
+    .step-num {
+      font-size: 2.6rem; color: var(--gold); line-height: 0.9;
+      flex-shrink:0; width: 2.4rem;
+    }
+    .step-title { margin-bottom: 0.5rem; }
+    .step p { color: var(--ink-soft); font-size: 0.95rem; }
+  </style>
+</Base>

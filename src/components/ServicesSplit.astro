@@ -1,0 +1,56 @@
+---
+import Icon from './Icon.astro';
+import { servicesSummary } from '../data/site.js';
+
+const {
+  items = servicesSummary,
+  eyebrow = "The Gold Standard",
+  title = "Two Comprehensive Services,\nOne Trusted Partner",
+  lead = "Whether you need complete property management or specialized maintenance support, Estate Concierge delivers exceptional service tailored to your needs.",
+  ctaField = "cta",
+} = Astro.props;
+---
+<div class="container center">
+  <span class="eyebrow reveal">{eyebrow}</span>
+  <h2 class="reveal split-title" data-delay="1" set:html={title.replace(/\n/g, '<br />')} />
+  <p class="reveal mx-auto split-lead" data-delay="2">{lead}</p>
+</div>
+
+<div class="container split-grid">
+  {items.map((s, i) => (
+    <article class="split-card reveal" data-delay={i + 1}>
+      <a href={s.href} class="split-media">
+        <img src={s.image} alt={s.title} loading="lazy" />
+      </a>
+      <div class="split-body">
+        <h3>{s.title}</h3>
+        <p class="split-sub">{s.subtitle}</p>
+        <ul class="split-list">
+          {s.points.map((p) => (
+            <li><span class="bullet"><Icon name="arrowRight" size={14} /></span>{p}</li>
+          ))}
+        </ul>
+        <a href={s.href} class="link-gold">{s[ctaField]} <Icon name="arrowRight" size={16} /></a>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style>
+  .split-title { margin-top: 1rem; }
+  .split-lead { margin-top: 1.2rem; max-width: 60ch; color: var(--ink-soft); }
+  .split-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+  }
+  @media (max-width: 780px){ .split-grid{ grid-template-columns: 1fr; } }
+  .split-media { display: block; overflow: hidden; border-radius: var(--radius); aspect-ratio: 4/3; }
+  .split-media img { width:100%; height:100%; object-fit: cover; transition: transform 0.9s var(--ease); }
+  .split-card:hover .split-media img { transform: scale(1.05); }
+  .split-body { padding-top: 1.6rem; }
+  .split-sub { color: var(--ink-soft); margin: 0.5rem 0 1.3rem; }
+  .split-list { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1.6rem; }
+  .split-list li { display:flex; align-items:flex-start; gap:0.6rem; font-size:0.92rem; line-height: 1.4; }
+  .bullet { color: var(--gold); display:inline-flex; margin-top:0.28rem; flex-shrink:0; }
+</style>

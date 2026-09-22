@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ServiceCardsGrid from '../components/ServiceCardsGrid.astro';
+import CTASection from '../components/CTASection.astro';
+import { conciergeMaintenance as cm } from '../data/site.js';
+---
+<Base title="Concierge Maintenance" description={cm.intro}>
+  <PageHero eyebrow={cm.eyebrow} title={cm.title} intro={cm.intro} />
+
+  <section class="section section-cream">
+    <div class="container center intro-center">
+      <span class="eyebrow reveal">White-Glove Care</span>
+      <h2 class="reveal intro-title" data-delay="1">{cm.sectionTitle}</h2>
+      <p class="reveal mx-auto intro-body" data-delay="2">{cm.sectionBody}</p>
+    </div>
+  </section>
+
+  <section class="section section-cream-alt" style="padding-top:0;">
+    <div class="container">
+      <ServiceCardsGrid cards={cm.cards} />
+    </div>
+  </section>
+
+  <CTASection title={cm.ctaTitle} body={cm.ctaBody} />
+
+  <style>
+    .intro-center { max-width: 820px; margin-inline:auto; }
+    .intro-title { margin-top: 1rem; }
+    .intro-body { margin-top: 1.2rem; color: var(--ink-soft); max-width: 62ch; }
+    .section-cream-alt { padding-top: clamp(2.5rem,5vw,4rem); }
+  </style>
+</Base>

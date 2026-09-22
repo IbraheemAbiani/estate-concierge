@@ -1,0 +1,23 @@
+---
+// Minimal inline SVG icon set (social + UI). Keeps zero external requests.
+const { name, size = 20 } = Astro.props;
+const paths = {
+  facebook: '<path d="M14 9h2V6h-2c-1.7 0-3 1.3-3 3v2H9v3h2v6h3v-6h2.1l.4-3H14V9.5c0-.3.2-.5.5-.5z"/>',
+  instagram: '<rect x="4" y="4" width="16" height="16" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="16.6" cy="7.4" r="1.1"/>',
+  youtube: '<path d="M21 8.4c-.2-1-.9-1.7-1.9-1.9C17.4 6.1 12 6.1 12 6.1s-5.4 0-7.1.4C3.9 6.7 3.2 7.4 3 8.4 2.6 10.1 2.6 12 2.6 12s0 1.9.4 3.6c.2 1 .9 1.7 1.9 1.9 1.7.4 7.1.4 7.1.4s5.4 0 7.1-.4c1-.2 1.7-.9 1.9-1.9.4-1.7.4-3.6.4-3.6s0-1.9-.4-3.6zM10.3 14.6V9.4l4.5 2.6z"/>',
+  x: '<path d="M17.5 5h2.4l-5.3 6 6.2 8h-4.9l-3.8-5-4.4 5H5.3l5.6-6.4L4.7 5h5l3.4 4.6zm-.9 12.5h1.3L8.3 6.4H6.9z"/>',
+  linkedin: '<path d="M7 9v9H4V9zm-1.5-1.3A1.7 1.7 0 105.5 4.3a1.7 1.7 0 000 3.4zM20 18h-3v-4.8c0-1.2-.5-1.9-1.5-1.9-.8 0-1.3.6-1.5 1.1-.1.2-.1.5-.1.8V18h-3s.1-8.3 0-9h3v1.3c.4-.6 1.1-1.5 2.7-1.5 2 0 3.4 1.3 3.4 4.1z"/>',
+  tiktok: '<path d="M15.5 4c.3 1.9 1.4 3.2 3.5 3.4v2.4c-1.2.1-2.4-.3-3.5-1v4.9c0 3-2.2 5-4.9 4.6C8 20 6.4 18 6.5 15.7c.1-2.4 2.2-4.2 4.8-3.9v2.5c-.4-.1-.9-.2-1.3-.1-1 .1-1.7.9-1.7 1.9 0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.9V4z"/>',
+  arrowRight: '<path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+  chevronLeft: '<path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+  chevronRight: '<path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+  phone: '<path d="M6.6 3h3l1.5 4-2 1.3a11 11 0 004.6 4.6l1.3-2 4 1.5v3a1.5 1.5 0 01-1.6 1.5A16 16 0 015 4.6 1.5 1.5 0 016.6 3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.5"/>',
+  pin: '<path d="M12 21s-6-5.2-6-10a6 6 0 1112 0c0 4.8-6 10-6 10z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="11" r="2.2" fill="none" stroke="currentColor" stroke-width="1.5"/>',
+};
+const inner = paths[name] || '';
+const strokeIcons = ['arrowRight','chevronLeft','chevronRight','phone','mail','pin','instagram'];
+const isStroke = strokeIcons.includes(name);
+---
+<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24"
+     fill={isStroke ? 'none' : 'currentColor'} aria-hidden="true" set:html={inner}></svg>

@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Page Not Found">
+  <section class="section-dark nf">
+    <div class="container center">
+      <span class="eyebrow">Error 404</span>
+      <h1 class="nf-title">This Page Has Moved On</h1>
+      <p class="nf-body">The page you're looking for can't be found. Let us guide you back home.</p>
+      <a href="/" class="btn btn-gold">Return Home</a>
+    </div>
+  </section>
+  <style>
+    .nf { min-height: 80vh; display:grid; place-items:center; }
+    .nf-title { color:#fff; margin: 1rem 0 1.2rem; }
+    .nf-body { color: var(--on-dark-soft); margin-bottom: 2rem; }
+  </style>
+</Base>

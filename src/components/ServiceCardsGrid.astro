@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+const { cards } = Astro.props;
+---
+<div class="cards-grid">
+  {cards.map((card, i) => (
+    <article class="service-card reveal" data-delay={i % 3}>
+      <h3 class="service-card-title">{card.title}</h3>
+      <p class="service-card-body">{card.body}</p>
+      <ul class="service-card-list">
+        {card.points.map((p) => (
+          <li><span class="bullet"><Icon name="arrowRight" size={14} /></span>{p}</li>
+        ))}
+      </ul>
+    </article>
+  ))}
+</div>
+
+<style>
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 2.5vw, 2.5rem);
+  }
+  @media (max-width: 940px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .cards-grid { grid-template-columns: 1fr; } }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--hairline-soft);
+    border-top: 2px solid var(--gold);
+    padding: clamp(1.8rem, 3vw, 2.6rem);
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(34,39,46,0.12);
+  }
+  .service-card-title { margin-bottom: 0.9rem; }
+  .service-card-body { color: var(--ink-soft); font-size: 0.98rem; margin-bottom: 1.5rem; }
+  .service-card-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .service-card-list li {
+    display: flex; align-items: flex-start; gap: 0.7rem;
+    font-size: 0.95rem; color: var(--ink);
+  }
+  .bullet {
+    color: var(--gold);
+    display: inline-flex;
+    margin-top: 0.28rem;
+    flex-shrink: 0;
+  }
+</style>
